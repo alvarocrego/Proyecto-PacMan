@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>PACMAN</title>
+        <meta charset="utf-8" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\/script>')</script>
+        <script src="jquery.mousewheel.js"></script>
+
+        <style>
+
+            #tablero{
+                width: 10em;
+                height: 10em;
+                border: 3px blue ridge;
+                position: relative;
+            }
+
+            #arriba, #abajo, #cerrado, #izquierda{
+                opacity:0;
+            }
+
+            #pac{
+                position: absolute;
+            }
+
+            img{
+                width: 1em;
+                height: 1em;
+                position: absolute;
+            }
+
+            #obstaculo2, #obstaculo3, #obstaculo4, #obstaculo5, #obstaculo6, #obstaculo7, #obstaculo8, #obstaculo9, #obstaculo10,  #obstaculo11{
+                position: absolute;
+                background-color: grey;
+            }
+
+            #obstaculo1{
+                width: 2em;
+                height: 3em;
+                top: 3em;
+                left: 4em;
+                border: 1px blue ridge;
+                position: absolute;
+            }
+
+            #obstaculo2{
+                width: 3em;
+                height: 1em;
+                top: 1em;
+                left: 1em;
+            }
+
+            #obstaculo3{
+                width:4em;
+                height: 1em;
+                top: 1em;
+                left: 5em;
+            }
+
+            #obstaculo4{
+                width: 1em;
+                height: 1em;
+                top: 3em;
+                left: 8em;
+            }
+
+            #obstaculo5{
+                width: 1em;
+                height: 2em;
+                top: 3em;
+                left: 7em;
+            }
+
+            #obstaculo6{
+                width: 2em;
+                height: 1em;
+                top: 6em;
+                left: 7em;
+            }
+
+            #obstaculo7{
+                width: 1em;
+                height: 1em;
+                top: 7em;
+                left: 5em;
+            }
+
+            #obstaculo8{
+                width: 5em;
+                height: 1em;
+                top: 8em;
+                left: 4em;
+            }
+
+            #obstaculo9{
+                width: 1em;
+                height: 1em;
+                top: 8em;
+                left: 1em;
+            }
+
+            #obstaculo10{
+                width: 1em;
+                height: 5em;
+                top: 3em;
+                left: 2em;
+            }
+
+            #obstaculo11{
+                width: 1em;
+                height: 2em;
+                top: 5em;
+            }
+
+        </style>
+
+
+        <script type="text/javascript">
+          var x = 1;
+          var y = 1;
+          var obstaculos = new Array(10);
+
+          for (i = 1; i < 11; i++) {
+
+              obstaculos[i] = new Array(10);
+
+          }
+
+          obstaculos[2][2] = 1;
+          obstaculos[3][2] = 1;
+          obstaculos[4][2] = 1;
+          obstaculos[6][2] = 1;
+          obstaculos[7][2] = 1;
+          obstaculos[8][2] = 1;
+          obstaculos[9][2] = 1;
+          obstaculos[9][4] = 1;
+          obstaculos[8][4] = 1;
+          obstaculos[8][5] = 1;
+          obstaculos[6][4] = 1;
+          obstaculos[5][4] = 1;//
+          obstaculos[5][5] = 1;//
+          obstaculos[5][6] = 1;//
+          obstaculos[6][6] = 1;//
+          obstaculos[6][5] = 1;//
+          obstaculos[6][4] = 1;//
+          obstaculos[3][4] = 1;
+          obstaculos[3][5] = 1;
+          obstaculos[3][6] = 1;
+          obstaculos[3][7] = 1;
+          obstaculos[3][8] = 1;
+          obstaculos[2][9] = 1;
+          obstaculos[1][7] = 1;
+          obstaculos[1][6] = 1;
+          obstaculos[2][9] = 1;
+          obstaculos[5][9] = 1;
+          obstaculos[6][9] = 1;
+          obstaculos[7][9] = 1;
+          obstaculos[8][7] = 1;
+          obstaculos[9][7] = 1;
+          obstaculos[8][9] = 1;
+          obstaculos[9][9] = 1;
+          obstaculos[6][8] = 1;
+
+
+          $(document).ready(function() {
+              
+              $("body").keypress(function(e) {
+
+
+                  switch (e.which) {
+
+                      case 100: //pulsamos 'D'
+
+                          if (x < 10) {
+                              //alert(obstaculos[x+1][y]);
+                              if (obstaculos[x + 1][y] != 1) {
+                                  $('#pac').animate({"left": "+=1em"}, 500);
+                                  $('#cerrado').animate({opacity: 1}, 200, function() {
+                                      $('#izquierda').css("opacity", "0");
+                                      $('#arriba').css("opacity", "0");
+                                      $('#abajo').css("opacity", "0");
+                                      $('#derecha').css("opacity", "1");
+                                      $('#cerrado').animate({opacity: 0}, 200);
+                                  });
+                                  x += 1;
+                                  $('#equis').val(x);
+                              }
+                          }
+                          break;
+
+                      case 97: //pulsamos 'A'
+
+                          if (x > 1) {
+                              if (obstaculos[x - 1][y] != 1) {
+
+                                  $('#pac').animate({"left": "-=1em"}, 500);
+                                  $('#cerrado').animate({opacity: 1}, 200, function() {
+                                      $('#derecha').css("opacity", "0");
+                                      $('#arriba').css("opacity", "0");
+                                      $('#abajo').css("opacity", "0");
+                                      $('#izquierda').css("opacity", "1");
+                                      $('#cerrado').animate({opacity: 0}, 200);
+                                  });
+                                  x -= 1;
+                                  $('#equis').val(x);
+                              }
+                          }
+
+                          break;
+
+                      case 115: //pulsamos 'S'
+
+                          if (y < 10) {
+                              if (obstaculos[x][y + 1] != 1) {
+                                  $('#pac').animate({"top": "+=1em"}, 500);
+                                  $('#cerrado').animate({opacity: 1}, 200, function() {
+                                      $('#izquierda').css("opacity", "0");
+                                      $('#arriba').css("opacity", "0");
+                                      $('#derecha').css("opacity", "0");
+                                      $('#abajo').css("opacity", "1");
+                                      $('#cerrado').animate({opacity: 0}, 200);
+                                  });
+                                  y += 1;
+                                  $('#ygriega').val(y);
+                              }
+                          }
+
+                          break;
+
+                      case 119: //pulsamos 'W'
+
+                          if (y > 1) {
+                              if (obstaculos[x][y - 1] != 1) {
+                                  $('#pac').animate({"top": "-=1em"}, 500);
+                                  $('#cerrado').animate({opacity: 1}, 200, function() {
+                                      $('#izquierda').css("opacity", "0");
+                                      $('#derecha').css("opacity", "0");
+                                      $('#abajo').css("opacity", "0");
+                                      $('#arriba').css("opacity", "1");
+                                      $('#cerrado').animate({opacity: 0}, 200);
+                                  });
+                                  y -= 1;
+                                  $('#ygriega').val(y);
+                              }
+                          }
+
+                  }
+              });
+
+          });
+
+
+        </script>	
+
+    </head>
+    <body>
+
+        <div>
+            <p>Coordenada X<input type=text id="equis" value="1" />	</p>	
+            <p>Coordenada Y<input type=text id="ygriega" value="1" /></p>			
+        </div> 
+
+        <div id="tablero">
+            <div id="pac">
+                <img id="derecha" src="img/pac-1.png" />
+                <img id="arriba" src="img/pac-2.png" />
+                <img id="izquierda" src="img/pac-3.png" />
+                <img id="abajo" src="img/pac-4.png" />
+                <img id="cerrado" src="img/pac-0.png" />
+            </div>
+
+            <div id="obstaculo1">
+            </div>
+
+            <div id="obstaculo2">
+            </div>
+
+            <div id="obstaculo3">
+            </div>
+
+            <div id="obstaculo4">
+            </div>
+
+            <div id="obstaculo5">
+            </div>
+
+            <div id="obstaculo6">
+            </div>
+
+            <div id="obstaculo7">
+            </div>
+
+            <div id="obstaculo8">
+            </div>
+
+            <div id="obstaculo9">
+            </div>
+
+            <div id="obstaculo10">
+            </div>
+
+            <div id="obstaculo11">
+            </div>
+        </div>
+
+
+    </body>
+</html>
+

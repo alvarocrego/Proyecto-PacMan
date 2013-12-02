@@ -7,15 +7,11 @@
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\/script>')</script>
         <script src="jquery.mousewheel.js"></script>
-
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+        <link rel="stylesheet" href="css/main.css">
         <style>
 
-            #tablero{
-                width: 10em;
-                height: 10em;
-                border: 3px blue ridge;
-                position: relative;
-            }
 
             #arriba, #abajo, #cerrado, #izquierda{
                 opacity:0;
@@ -165,9 +161,18 @@
 
             $(document).ready(function() {
 
+                $('#tablero').fadeOut(0);
+                //25% cada for
+
                 function tablero(xy) {
+
+                    $('#tablero').css({"width": xy + "em", "height": xy + "em", "border": "3px blue ridge", "position": "relative"});
+
                     obstaculos2 = new Array(xy);
+                    var progreso = 25 / xy;/////////////////
+                    var barProgreso = 0;//////////////////////////
                     for (i = 1; i < xy + 1; i++) {
+                        barProgreso += progreso;////////////////////////
                         obstaculos2[i] = new Array(xy);
                     }
 
@@ -183,25 +188,29 @@
                         }
                     }
                     document.getElementById('miau').innerHTML = miau;
-                    pintarTableto(xy);
+                    pintarObstaculos(xy);
                 }
 
-                function pintarTableto(xy) {
+                function pintarObstaculos(xy) {
                     id = 0;
                     for (xa = 1; xa < xy + 1; xa++) {
                         for (ya = 1; ya < xy + 1; ya++) {
                             id++;
                             if (obstaculos2[xa][ya] == 1) {
                                 $("#tablero").append("<div id='obstaculo2" + id + "'></div>");
-                                $("#obstaculo2"+id).css({"left":xa-1+"em","top":ya-1+"em","width":"1em","height":"1em","position":"absolute","background-color":"grey"});
+                                $("#obstaculo2" + id).css({"left": xa - 1 + "em", "top": ya - 1 + "em", "width": "1em", "height": "1em", "position": "absolute", "background-color": "grey"});
                             }
                         }
                     }
 
                 }
 
-                tablero(10);
-               
+                function barraDeProceso(proceso) {
+
+                }
+
+                tablero(70);
+                $('#tablero').fadeIn(1000);
 
                 $("body").keypress(function(e) {
 
@@ -295,7 +304,7 @@
     <body>
 
         <div>
-            <p>Coordenada X<input type=text id="equis" value="1" />	</p>	
+            <p>Coordenada X<input type=text id="equis" value="1" /></p>	
             <p>Coordenada Y<input type=text id="ygriega" value="1" /></p>			
         </div> 
 
@@ -342,9 +351,26 @@
             </div>-->
         </div>
 
+        <div id="carga">
+            <div class="progress progress-striped active">
+                <div class="bar" style="width: 70%;"></div>
+            </div>
+        </div>
+
         <div id="miau"></div>
 
-
+        <script src="js/vendor/bootstrap-transition.js"></script>
+        <script src="js/vendor/bootstrap-alert.js"></script>
+        <script src="js/vendor/bootstrap-modal.js"></script>
+        <script src="js/vendor/bootstrap-dropdown.js"></script>
+        <script src="js/vendor/bootstrap-scrollspy.js"></script>
+        <script src="js/vendor/bootstrap-tab.js"></script>
+        <script src="js/vendor/bootstrap-tooltip.js"></script>
+        <script src="js/vendor/bootstrap-popover.js"></script>
+        <script src="js/vendor/bootstrap-button.js"></script>
+        <script src="js/vendor/bootstrap-collapse.js"></script>
+        <script src="js/vendor/bootstrap-carousel.js"></script>
+        <script src="js/vendor/bootstrap-typeahead.js"></script>  
     </body>
 </html>
 
